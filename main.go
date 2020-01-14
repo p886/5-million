@@ -14,10 +14,10 @@ const daysInYear = 366
 
 func main() {
 	currentSteps, err := strconv.Atoi(os.Args[1])
-
 	if err != nil {
 		log.Fatalf("Error converting input steps: %v", err)
 	}
+
 	targetStepsPerDay := targetSteps / daysInYear
 
 	currentDay, err := dayOfTheYear(time.Now())
