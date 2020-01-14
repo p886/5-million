@@ -30,10 +30,15 @@ func main() {
 	diff := currentSteps - currentTarget
 	relativeDiff := (float64(diff) / float64(currentTarget)) * 100.0
 
+	var plus string
+	if diff > 0 {
+		plus = "+"
+	}
+
 	fmt.Printf("\nCurrent target:\t%d\n"+
 		"Current steps:\t%d\n"+
 		"Current diff:\t%d\n"+
-		"Relative diff:\t%.2f%%\n", currentTarget, currentSteps, diff, relativeDiff)
+		"Relative diff:\t%s%.2f%%\n", currentTarget, currentSteps, diff, plus, relativeDiff)
 
 }
 
