@@ -11,7 +11,7 @@ go build -o app
 ## Usage
 
 ```
-app <steps so far>
+app [steps so far]
 ```
 
 ## Example
