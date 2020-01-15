@@ -2,7 +2,6 @@ package calculator
 
 import (
 	"fmt"
-	"log"
 	"math"
 	"time"
 )
@@ -15,10 +14,7 @@ func Calculate(currentSteps int) string {
 
 	targetStepsPerDay := targetSteps / daysInYear
 
-	currentDay, err := dayOfTheYear(time.Now())
-	if err != nil {
-		log.Fatalf("Error converting input steps: %v", err)
-	}
+	currentDay := dayOfTheYear(time.Now())
 
 	currentTarget := targetStepsPerDay * currentDay
 
@@ -36,13 +32,9 @@ func Calculate(currentSteps int) string {
 		"Relative diff:\t%s%.2f%%\n", currentTarget, currentSteps, diff, plus, relativeDiff)
 }
 
-func dayOfTheYear(now time.Time) (int, error) {
-	berlinTimeZone, err := time.LoadLocation("Europe/Berlin")
-	if err != nil {
-		return 0, err
-	}
-	beginningOfYear := time.Date(2020, 1, 1, 0, 0, 0, 0, berlinTimeZone)
+func dayOfTheYear(now time.Time) int {
+	beginningOfYear := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
 	timePassed := now.Sub(beginningOfYear)
 	daysPassed := int(math.Ceil(timePassed.Hours() / 24))
-	return daysPassed, nil
+	return daysPassed
 }
