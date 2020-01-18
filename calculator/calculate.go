@@ -1,7 +1,6 @@
 package calculator
 
 import (
-	"fmt"
 	"math"
 	"time"
 )
@@ -9,8 +8,17 @@ import (
 const targetSteps = 5_000_000
 const daysInYear = 366
 
+// CalculationResult is the result returned from a calculcation
+type CalculationResult struct {
+	CurrentTarget int
+	CurrentSteps  int
+	Diff          int
+	Plus          string
+	RelativeDiff  float64
+}
+
 // Calculate calculates the current statistics with the given current steps
-func Calculate(currentSteps int) string {
+func Calculate(currentSteps int) CalculationResult {
 
 	targetStepsPerDay := targetSteps / daysInYear
 
@@ -26,10 +34,13 @@ func Calculate(currentSteps int) string {
 		plus = "+"
 	}
 
-	return fmt.Sprintf("\nCurrent target:\t%d\n"+
-		"Current steps:\t%d\n"+
-		"Current diff:\t%d\n"+
-		"Relative diff:\t%s%.2f%%\n", currentTarget, currentSteps, diff, plus, relativeDiff)
+	return CalculationResult{
+		CurrentTarget: currentTarget,
+		CurrentSteps:  currentSteps,
+		Diff:          diff,
+		Plus:          plus,
+		RelativeDiff:  relativeDiff,
+	}
 }
 
 func dayOfTheYear(now time.Time) int {

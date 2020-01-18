@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/p886/5-million-steps/calculator"
+	"github.com/p886/5-million-steps/representer"
 	"github.com/spf13/cobra"
 )
 
@@ -22,7 +23,8 @@ var RootCmd = &cobra.Command{
 			log.Fatalf("Error converting input steps: %v", err)
 		}
 		result := calculator.Calculate(currentSteps)
-		fmt.Println(result)
+		textRepresentation := representer.AsText(result)
+		fmt.Println(textRepresentation)
 	},
 }
 
