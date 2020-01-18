@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/p886/5-million-steps/calculator"
+	"github.com/p886/5-million-steps/representer"
 	"github.com/spf13/cobra"
 )
 
@@ -36,8 +37,16 @@ var ServerCmd = &cobra.Command{
 				return
 			}
 			result := calculator.Calculate(currentSteps)
+			jsonRepresentation, err := representer.AsJSON(result)
+			if err != nil {
+				log.Printf("Error representing JSON: %v", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte("Internal Server Error"))
+				return
+			}
 			w.WriteHeader(http.StatusOK)
-			w.Write([]byte(result))
+			w.Header().Set("Content-Type", "application/json")
+			w.Write([]byte(jsonRepresentation))
 		})
 		http.ListenAndServe(listenAddr, nil)
 	},
